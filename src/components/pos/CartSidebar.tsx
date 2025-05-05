@@ -24,6 +24,10 @@ const CartSidebar = ({
   onUpdateQuantity = () => {},
   onRemoveItem = () => {}
 }: CartSidebarProps) => {
+  // Calculate total items and total price
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
   return (
     <div
       className={cn(
@@ -63,7 +67,24 @@ const CartSidebar = ({
 
       {items.length > 0 && (
         <div className="p-4 bg-white border-t border-gray-100">
-          <CheckoutSummary items={items} onCheckout={onCheckout} />
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Items:</span>
+                <span>{totalItems}</span>
+              </div>
+              <div className="flex justify-between font-medium">
+                <span>Total:</span>
+                <span>${totalPrice.toFixed(2)}</span>
+              </div>
+            </div>
+            <Button 
+              className="w-full" 
+              onClick={onCheckout}
+            >
+              Complete Transaction
+            </Button>
+          </div>
         </div>
       )}
     </div>
