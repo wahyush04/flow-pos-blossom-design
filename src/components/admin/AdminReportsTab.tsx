@@ -15,38 +15,96 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { getTransactions } from "@/lib/transactionService";
+import { Input } from "@/components/ui/input";
+import { Filter, Search, Eye } from "lucide-react";
+import { 
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
-interface Transaction {
+// Define the UserLog interface
+interface UserLog {
   id: number;
-  date: string;
-  items: Array<{
-    id: number;
-    name: string;
-    price: number;
-    quantity: number;
-  }>;
-  total: number;
+  username: string;
+  fullname: string;
+  course: string;
+  status: "Completed" | "In Progress" | "Not Started";
+  completedDate?: string;
 }
 
 const AdminReportsTab = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [showDetails, setShowDetails] = useState<number | null>(null);
+  const [logs, setLogs] = useState<UserLog[]>([]);
+  const [filteredLogs, setFilteredLogs] = useState<UserLog[]>([]);
+  const [usernameFilter, setUsernameFilter] = useState<string>("");
+  const [showFilter, setShowFilter] = useState<boolean>(false);
   
   useEffect(() => {
-    // Load transactions
-    const loadedTransactions = getTransactions();
-    setTransactions(loadedTransactions);
+    // Mock data for user logs
+    const mockLogs: UserLog[] = [
+      {
+        id: 1,
+        username: "johndoe",
+        fullname: "John Doe",
+        course: "Introduction to JavaScript",
+        status: "Completed",
+        completedDate: "2025-04-25"
+      },
+      {
+        id: 2,
+        username: "janedoe",
+        fullname: "Jane Doe",
+        course: "React for Beginners",
+        status: "Completed",
+        completedDate: "2025-05-02"
+      },
+      {
+        id: 3,
+        username: "mikebrown",
+        fullname: "Mike Brown",
+        course: "Advanced CSS Techniques",
+        status: "Completed",
+        completedDate: "2025-05-01"
+      },
+      {
+        id: 4,
+        username: "sarahsmith",
+        fullname: "Sarah Smith",
+        course: "TypeScript Fundamentals",
+        status: "Completed",
+        completedDate: "2025-04-29"
+      },
+      {
+        id: 5,
+        username: "robertjohnson",
+        fullname: "Robert Johnson",
+        course: "Node.js Essentials",
+        status: "Completed",
+        completedDate: "2025-05-03"
+      }
+    ];
+    
+    setLogs(mockLogs);
+    setFilteredLogs(mockLogs);
   }, []);
 
-  const toggleDetails = (id: number) => {
-    setShowDetails(showDetails === id ? null : id);
-  };
+  useEffect(() => {
+    // Filter logs based on username filter
+    if (usernameFilter.trim() === "") {
+      setFilteredLogs(logs);
+    } else {
+      const filtered = logs.filter(log => 
+        log.username.toLowerCase().includes(usernameFilter.toLowerCase())
+      );
+      setFilteredLogs(filtered);
+    }
+  }, [logs, usernameFilter]);
 
-  // Calculate summary statistics
-  const totalSales = transactions.reduce((sum, transaction) => sum + transaction.total, 0);
-  const totalTransactions = transactions.length;
-  const averageTransaction = totalTransactions > 0 ? totalSales / totalTransactions : 0;
+  const toggleFilter = () => {
+    setShowFilter(!showFilter);
+  };
 
   return (
     <div className="space-y-6">
@@ -54,101 +112,104 @@ const AdminReportsTab = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Completions</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${totalSales.toFixed(2)}</div>
+            <div className="text-2xl font-bold">{logs.length}</div>
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Transactions</CardTitle>
+            <CardTitle className="text-sm font-medium">Unique Students</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalTransactions}</div>
+            <div className="text-2xl font-bold">
+              {new Set(logs.map(log => log.username)).size}
+            </div>
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Average Sale</CardTitle>
+            <CardTitle className="text-sm font-medium">Courses Completed</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${averageTransaction.toFixed(2)}</div>
+            <div className="text-2xl font-bold">
+              {new Set(logs.map(log => log.course)).size}
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Transactions Table */}
+      {/* User Logs Table */}
       <Card>
-        <CardHeader>
-          <CardTitle>Transaction History</CardTitle>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle>User Course Completion Logs</CardTitle>
+          <div className="flex space-x-2">
+            <Button variant="outline" size="sm" onClick={toggleFilter}>
+              <Filter className="mr-2 h-4 w-4" />
+              Filter
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
-          {transactions.length > 0 ? (
+          {showFilter && (
+            <div className="mb-4 flex flex-col sm:flex-row gap-2">
+              <div className="relative w-full sm:w-64">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+                <Input
+                  type="text"
+                  placeholder="Filter by username..."
+                  className="pl-8"
+                  value={usernameFilter}
+                  onChange={(e) => setUsernameFilter(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
+          
+          {filteredLogs.length > 0 ? (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead className="w-12">No</TableHead>
+                  <TableHead>Username</TableHead>
+                  <TableHead>Full Name</TableHead>
+                  <TableHead>Course</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {transactions.map((transaction) => (
-                  <>
-                    <TableRow key={transaction.id}>
-                      <TableCell>{transaction.id}</TableCell>
-                      <TableCell>{transaction.date}</TableCell>
-                      <TableCell>${transaction.total.toFixed(2)}</TableCell>
-                      <TableCell>
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={() => toggleDetails(transaction.id)}
-                        >
-                          {showDetails === transaction.id ? "Hide Details" : "Show Details"}
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                    {showDetails === transaction.id && (
-                      <TableRow>
-                        <TableCell colSpan={4} className="bg-muted/50">
-                          <div className="p-2">
-                            <h4 className="font-medium mb-2">Transaction Items</h4>
-                            <Table>
-                              <TableHeader>
-                                <TableRow>
-                                  <TableHead>Item</TableHead>
-                                  <TableHead>Price</TableHead>
-                                  <TableHead>Quantity</TableHead>
-                                  <TableHead>Subtotal</TableHead>
-                                </TableRow>
-                              </TableHeader>
-                              <TableBody>
-                                {transaction.items.map((item, idx) => (
-                                  <TableRow key={`${transaction.id}-item-${idx}`}>
-                                    <TableCell>{item.name}</TableCell>
-                                    <TableCell>${item.price.toFixed(2)}</TableCell>
-                                    <TableCell>{item.quantity}</TableCell>
-                                    <TableCell>${(item.price * item.quantity).toFixed(2)}</TableCell>
-                                  </TableRow>
-                                ))}
-                              </TableBody>
-                            </Table>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </>
+                {filteredLogs.map((log, index) => (
+                  <TableRow key={log.id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{log.username}</TableCell>
+                    <TableCell>{log.fullname}</TableCell>
+                    <TableCell>{log.course}</TableCell>
+                    <TableCell>
+                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                        log.status === "Completed" ? "bg-green-100 text-green-800" : 
+                        log.status === "In Progress" ? "bg-yellow-100 text-yellow-800" : 
+                        "bg-gray-100 text-gray-800"
+                      }`}>
+                        {log.status}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="ghost" size="sm">
+                        <Eye className="h-4 w-4 mr-1" />
+                        Detail
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 ))}
               </TableBody>
             </Table>
           ) : (
             <div className="text-center p-4 text-muted-foreground">
-              No transactions found
+              No user logs found
             </div>
           )}
         </CardContent>
