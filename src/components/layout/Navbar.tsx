@@ -1,54 +1,29 @@
 
-import { Menu, ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
 
-interface NavbarProps {
-  onMenuToggle: () => void;
-  cartItemCount: number;
-  onCartToggle: () => void;
-}
-
-const Navbar = ({ onMenuToggle, cartItemCount, onCartToggle }: NavbarProps) => {
-  const isMobile = useIsMobile();
-  
+const Navbar = () => {
   return (
     <header className="bg-white border-b border-gray-200">
       <div className="container mx-auto flex items-center justify-between h-16 px-4 md:px-6">
         <div className="flex items-center gap-4">
-          {isMobile && (
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={onMenuToggle}
-              className="md:hidden"
-            >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          )}
-          <h1 className="text-xl font-semibold text-pos-text-dark">MinPOS</h1>
+          <h1 className="text-xl font-semibold text-pos-text-dark">E-Learning</h1>
         </div>
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative"
-            onClick={onCartToggle}
-          >
-            <ShoppingCart className="h-5 w-5" />
-            {cartItemCount > 0 && (
-              <span className={cn(
-                "absolute -top-1 -right-1 w-5 h-5 rounded-full text-xs flex items-center justify-center bg-primary text-white",
-                cartItemCount > 9 ? "text-[10px]" : ""
-              )}>
-                {cartItemCount > 99 ? "99+" : cartItemCount}
-              </span>
-            )}
-            <span className="sr-only">Shopping cart</span>
-          </Button>
-        </div>
+        
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={cn(
+                  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                )}
+                href="/profile"
+              >
+                My Profile
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
     </header>
   );
