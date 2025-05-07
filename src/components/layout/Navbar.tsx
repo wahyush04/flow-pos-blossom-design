@@ -1,12 +1,31 @@
 
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { ShoppingCart, Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const Navbar = () => {
+interface NavbarProps {
+  onMenuToggle?: () => void;
+  cartItemCount?: number;
+  onCartToggle?: () => void;
+}
+
+const Navbar = ({ onMenuToggle, cartItemCount = 0, onCartToggle }: NavbarProps = {}) => {
   return (
     <header className="bg-white border-b border-gray-200">
       <div className="container mx-auto flex items-center justify-between h-16 px-4 md:px-6">
         <div className="flex items-center gap-4">
+          {onMenuToggle && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={onMenuToggle}
+            >
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          )}
           <h1 className="text-xl font-semibold text-pos-text-dark">E-Learning</h1>
         </div>
         
@@ -24,6 +43,22 @@ const Navbar = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
+
+        {onCartToggle && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative"
+            onClick={onCartToggle}
+          >
+            <ShoppingCart className="h-5 w-5" />
+            {cartItemCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {cartItemCount}
+              </span>
+            )}
+          </Button>
+        )}
       </div>
     </header>
   );

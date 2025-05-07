@@ -9,6 +9,8 @@ export interface Product {
   image?: string;
   category?: string;
   stock?: number;
+  type?: string;
+  description?: string;
 }
 
 interface ProductCardProps {
