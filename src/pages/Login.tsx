@@ -20,8 +20,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 // Mock users for demonstration purposes
 // In a real app, you would verify against a database
 const USERS = [
-  { username: "admin", password: "admin123", role: "admin" },
-  { username: "cashier", password: "cashier123", role: "cashier" }
+  { username: "instructor", password: "teach123", role: "admin" },
+  { username: "student", password: "learn123", role: "cashier" }
 ];
 
 const formSchema = z.object({
@@ -127,8 +127,8 @@ const Login = () => {
         <CardFooter className="flex flex-col space-y-2">
           <div className="text-sm text-center text-muted-foreground">
             <p>Demo Credentials:</p>
-            <p>Admin: admin / admin123</p>
-            <p>Cashier: cashier / cashier123</p>
+            <p>Instructor: instructor / teach123</p>
+            <p>Student: student / learn123</p>
           </div>
         </CardFooter>
       </Card>
