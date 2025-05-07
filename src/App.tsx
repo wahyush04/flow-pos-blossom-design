@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Admin from "./pages/Admin";
 import POS from "./pages/POS";
 import NotFound from "./pages/NotFound";
@@ -22,6 +23,7 @@ const App = () => (
           {/* Redirect root to login */}
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/pos" element={<POS />} />
           <Route path="*" element={<NotFound />} />
