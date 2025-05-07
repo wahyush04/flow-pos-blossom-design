@@ -2,6 +2,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Product } from '@/components/pos/ProductCard';
+import { Link } from 'react-router-dom';
 
 interface CourseCardProps {
   course: Product & { description?: string; type?: string };
@@ -20,7 +21,9 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         </div>
       </CardContent>
       <CardFooter className="pt-2">
-        <Button variant="outline" className="w-full">View Details</Button>
+        <Link to={`/course/${course.id}`} className="w-full">
+          <Button variant="outline" className="w-full">View Details</Button>
+        </Link>
       </CardFooter>
     </Card>
   );

@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Admin from "./pages/Admin";
 import POS from "./pages/POS";
 import NotFound from "./pages/NotFound";
+import CourseDetail from "./pages/CourseDetail";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/pos" element={<POS />} />
+          <Route path="/course/:courseId" element={<CourseDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
