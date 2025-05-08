@@ -37,6 +37,7 @@ const CourseDetail = () => {
     const selectedCourse = allCourses.find((c) => c.id === Number(courseId));
     
     if (selectedCourse) {
+      console.log("Selected course:", selectedCourse);
       setCourse(selectedCourse);
       
       // Mock testimonials data for the course
@@ -147,6 +148,12 @@ const CourseDetail = () => {
             <p className="text-pos-neutral">
               {course.description || "This course will teach you everything you need to know about this subject. Join thousands of students who have already benefited from this comprehensive learning experience."}
             </p>
+            
+            {/* Debug information - remove in production */}
+            <div className="mt-4 p-2 bg-gray-100 rounded text-xs">
+              <p>Course ID: {course.id}</p>
+              <p>Course Type: {course.type || "Not specified"}</p>
+            </div>
           </div>
         </div>
         
