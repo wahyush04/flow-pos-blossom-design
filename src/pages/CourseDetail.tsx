@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProducts } from "@/lib/productService";
@@ -73,8 +74,13 @@ const CourseDetail = () => {
 
   const handleTakeCourse = () => {
     toast.success(`You've enrolled in ${course?.name}`);
-    // Navigate to course material page
-    navigate(`/course/${courseId}/material`);
+    
+    // Navigate to appropriate page based on course type
+    if (course?.type === "tryout") {
+      navigate(`/course/${courseId}/quiz`);
+    } else {
+      navigate(`/course/${courseId}/material`);
+    }
   };
 
   if (!course) return null;
@@ -109,14 +115,14 @@ const CourseDetail = () => {
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="flex items-center gap-1 px-3 py-1">
                   <Book size={16} />
-                  <span>Self-paced</span>
+                  <span>{course.type === "tryout" ? "Quiz" : "Self-paced"}</span>
                 </Badge>
               </div>
             </div>
             
             <Button onClick={handleTakeCourse} className="bg-primary flex items-center gap-2">
               <Play size={16} />
-              Take This Course
+              {course.type === "tryout" ? "Take This Quiz" : "Take This Course"}
             </Button>
           </div>
           

@@ -12,6 +12,7 @@ import POS from "./pages/POS";
 import NotFound from "./pages/NotFound";
 import CourseDetail from "./pages/CourseDetail";
 import CourseMaterial from "./pages/CourseMaterial";
+import TryoutQuiz from "./pages/TryoutQuiz";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/pos" element={<POS />} />
           <Route path="/course/:courseId" element={<CourseDetail />} />
           <Route path="/course/:courseId/material" element={<CourseMaterial />} />
+          <Route path="/course/:courseId/quiz" element={<TryoutQuiz />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
