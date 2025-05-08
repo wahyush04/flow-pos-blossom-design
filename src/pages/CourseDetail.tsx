@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProducts } from "@/lib/productService";
@@ -74,7 +73,8 @@ const CourseDetail = () => {
 
   const handleTakeCourse = () => {
     toast.success(`You've enrolled in ${course?.name}`);
-    // Here you would typically update the user's enrolled courses in a real app
+    // Navigate to course material page
+    navigate(`/course/${courseId}/material`);
   };
 
   if (!course) return null;
