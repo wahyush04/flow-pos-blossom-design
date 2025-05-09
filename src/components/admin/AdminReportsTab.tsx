@@ -24,6 +24,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { useNavigate } from "react-router-dom";
 
 // Define the UserLog interface
 interface UserLog {
@@ -40,6 +41,7 @@ const AdminReportsTab = () => {
   const [filteredLogs, setFilteredLogs] = useState<UserLog[]>([]);
   const [usernameFilter, setUsernameFilter] = useState<string>("");
   const [showFilter, setShowFilter] = useState<boolean>(false);
+  const navigate = useNavigate();
   
   useEffect(() => {
     // Mock data for user logs
@@ -104,6 +106,10 @@ const AdminReportsTab = () => {
 
   const toggleFilter = () => {
     setShowFilter(!showFilter);
+  };
+
+  const handleViewUserDetail = (userId: number) => {
+    navigate(`/user/${userId}`);
   };
 
   return (
@@ -198,7 +204,11 @@ const AdminReportsTab = () => {
                       </span>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleViewUserDetail(log.id)}
+                      >
                         <Eye className="h-4 w-4 mr-1" />
                         Detail
                       </Button>
