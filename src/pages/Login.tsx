@@ -1,23 +1,12 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { CardContent, CardFooter } from "@/components/ui/card";
 import { Eye, EyeOff, User, Lock } from "lucide-react";
 import AuthLayout from "@/components/auth/AuthLayout";
-import { Separator } from "@/components/ui/separator";
 
 // Mock users for demonstration purposes
 // In a real app, you would verify against a database
@@ -95,86 +84,79 @@ const Login = () => {
       imageSrc="/placeholder.svg"
     >
       <div className="space-y-6">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Username</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        placeholder="Enter your username" 
-                        className="pl-10 bg-white/20 border-white/30 text-white placeholder:text-white/60" 
-                        {...field} 
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage className="text-white" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Password</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        type={showPassword ? "text" : "password"} 
-                        placeholder="Enter your password" 
-                        className="pl-10 pr-10 bg-white/20 border-white/30 text-white placeholder:text-white/60"
-                        {...field} 
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute right-0 top-0 h-10 w-10 text-white/70 hover:text-white"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-4 w-4" />
-                        ) : (
-                          <Eye className="h-4 w-4" />
-                        )}
-                        <span className="sr-only">
-                          {showPassword ? "Hide password" : "Show password"}
-                        </span>
-                      </Button>
-                    </div>
-                  </FormControl>
-                  <FormMessage className="text-white" />
-                </FormItem>
-              )}
-            />
-            <Button 
-              type="submit" 
-              className="w-full bg-white text-primary hover:bg-white/90" 
-              disabled={isLoading}
-            >
-              {isLoading ? "Signing in..." : "Sign in"}
-            </Button>
-          </form>
-        </Form>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <div className="space-y-1">
+            <label htmlFor="username" className="block text-white text-sm font-medium">
+              Username
+            </label>
+            <div className="relative">
+              <User className="absolute left-3 top-2.5 h-4 w-4 text-white/60" />
+              <input 
+                id="username"
+                placeholder="Enter your username" 
+                className="w-full h-10 pl-10 pr-3 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50"
+                {...form.register("username")} 
+              />
+            </div>
+            {form.formState.errors.username && (
+              <p className="text-white text-xs mt-1">{form.formState.errors.username.message}</p>
+            )}
+          </div>
+          
+          <div className="space-y-1">
+            <label htmlFor="password" className="block text-white text-sm font-medium">
+              Password
+            </label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-2.5 h-4 w-4 text-white/60" />
+              <input 
+                id="password"
+                type={showPassword ? "text" : "password"} 
+                placeholder="Enter your password" 
+                className="w-full h-10 pl-10 pr-10 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50"
+                {...form.register("password")} 
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-2 h-6 w-6 flex items-center justify-center text-white/70 hover:text-white"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+                <span className="sr-only">
+                  {showPassword ? "Hide password" : "Show password"}
+                </span>
+              </button>
+            </div>
+            {form.formState.errors.password && (
+              <p className="text-white text-xs mt-1">{form.formState.errors.password.message}</p>
+            )}
+          </div>
+          
+          <button 
+            type="submit" 
+            className="w-full h-10 px-4 py-2 bg-white text-teal-600 rounded-md font-medium hover:bg-white/90 transition focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-50 disabled:cursor-not-allowed" 
+            disabled={isLoading}
+          >
+            {isLoading ? "Signing in..." : "Sign in"}
+          </button>
+        </form>
         
         <div className="relative">
-          <Separator className="bg-white/30" />
-          <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary/70 backdrop-blur-sm px-2 text-sm text-white">
-            OR
-          </p>
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-white/30"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 text-white bg-teal-500">OR</span>
+          </div>
         </div>
         
-        <Button
+        <button
           type="button"
-          variant="outline"
-          className="w-full flex items-center justify-center gap-2 bg-white text-primary border-white hover:bg-white/90"
+          className="w-full h-10 px-4 py-2 flex items-center justify-center gap-2 bg-white text-teal-600 rounded-md font-medium border border-white hover:bg-white/90 transition focus:outline-none focus:ring-2 focus:ring-white/50"
           onClick={handleGoogleLogin}
           disabled={isLoading}
         >
@@ -204,7 +186,7 @@ const Login = () => {
             <path d="M1 1h22v22H1z" fill="none" />
           </svg>
           Sign in with Google
-        </Button>
+        </button>
 
         <div className="text-sm text-center text-white/80 mt-4 space-y-4">
           <div>
@@ -214,7 +196,13 @@ const Login = () => {
           </div>
           <div>
             <p>Don't have an account?</p>
-            <Button variant="link" className="text-white" onClick={() => navigate("/register")}>Register here</Button>
+            <button 
+              type="button"
+              className="text-white underline hover:text-white/80" 
+              onClick={() => navigate("/register")}
+            >
+              Register here
+            </button>
           </div>
         </div>
       </div>
