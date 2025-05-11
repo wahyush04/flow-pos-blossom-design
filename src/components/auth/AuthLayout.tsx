@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Card } from "@/components/ui/card";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -27,15 +26,15 @@ const AuthLayout = ({ children, title, subtitle, imageSrc }: AuthLayoutProps) =>
         </div>
       </div>
 
-      {/* Form Section */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-8 bg-pos-bg-light">
-        <Card className="w-full max-w-md shadow-xl border-0">
-          <div className="px-8 pt-8 pb-4">
-            <h2 className="text-3xl font-bold text-center mb-2">{title}</h2>
-            <p className="text-muted-foreground text-center mb-6">{subtitle}</p>
+      {/* Form Section - Removed Card wrapper and updated background */}
+      <div className="w-full md:w-1/2 flex items-center justify-center p-8 bg-gradient-to-br from-primary/80 to-primary/20">
+        <div className="w-full max-w-md">
+          <div className="backdrop-blur-sm bg-white/20 p-8 rounded-xl shadow-lg">
+            <h2 className="text-3xl font-bold text-center mb-2 text-white">{title}</h2>
+            <p className="text-white/80 text-center mb-6">{subtitle}</p>
             {children}
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );

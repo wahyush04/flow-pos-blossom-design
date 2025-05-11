@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -95,7 +94,7 @@ const Login = () => {
       subtitle="Sign in to access your account"
       imageSrc="/placeholder.svg"
     >
-      <CardContent>
+      <div className="space-y-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
@@ -103,18 +102,18 @@ const Login = () => {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel className="text-white">Username</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input 
                         placeholder="Enter your username" 
-                        className="pl-10" 
+                        className="pl-10 bg-white/20 border-white/30 text-white placeholder:text-white/60" 
                         {...field} 
                       />
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-white" />
                 </FormItem>
               )}
             />
@@ -123,27 +122,27 @@ const Login = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-white">Password</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input 
                         type={showPassword ? "text" : "password"} 
                         placeholder="Enter your password" 
-                        className="pl-10 pr-10"
+                        className="pl-10 pr-10 bg-white/20 border-white/30 text-white placeholder:text-white/60"
                         {...field} 
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute right-0 top-0 h-10 w-10"
+                        className="absolute right-0 top-0 h-10 w-10 text-white/70 hover:text-white"
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? (
-                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                          <EyeOff className="h-4 w-4" />
                         ) : (
-                          <Eye className="h-4 w-4 text-muted-foreground" />
+                          <Eye className="h-4 w-4" />
                         )}
                         <span className="sr-only">
                           {showPassword ? "Hide password" : "Show password"}
@@ -151,13 +150,13 @@ const Login = () => {
                       </Button>
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-white" />
                 </FormItem>
               )}
             />
             <Button 
               type="submit" 
-              className="w-full" 
+              className="w-full bg-white text-primary hover:bg-white/90" 
               disabled={isLoading}
             >
               {isLoading ? "Signing in..." : "Sign in"}
@@ -165,9 +164,9 @@ const Login = () => {
           </form>
         </Form>
         
-        <div className="relative my-6">
-          <Separator />
-          <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-sm text-gray-500">
+        <div className="relative">
+          <Separator className="bg-white/30" />
+          <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary/70 backdrop-blur-sm px-2 text-sm text-white">
             OR
           </p>
         </div>
@@ -175,7 +174,7 @@ const Login = () => {
         <Button
           type="button"
           variant="outline"
-          className="w-full flex items-center justify-center gap-2"
+          className="w-full flex items-center justify-center gap-2 bg-white text-primary border-white hover:bg-white/90"
           onClick={handleGoogleLogin}
           disabled={isLoading}
         >
@@ -206,19 +205,19 @@ const Login = () => {
           </svg>
           Sign in with Google
         </Button>
-      </CardContent>
-      
-      <CardFooter className="flex flex-col space-y-2 border-t bg-slate-50 p-6 rounded-b-lg">
-        <div className="text-sm text-center text-muted-foreground">
-          <p>Demo Credentials:</p>
-          <p>Instructor: instructor / teach123</p>
-          <p>Student: student / learn123</p>
+
+        <div className="text-sm text-center text-white/80 mt-4 space-y-4">
+          <div>
+            <p>Demo Credentials:</p>
+            <p>Instructor: instructor / teach123</p>
+            <p>Student: student / learn123</p>
+          </div>
+          <div>
+            <p>Don't have an account?</p>
+            <Button variant="link" className="text-white" onClick={() => navigate("/register")}>Register here</Button>
+          </div>
         </div>
-        <div className="text-sm text-center text-muted-foreground mt-4">
-          <p>Don't have an account?</p>
-          <Button variant="link" onClick={() => navigate("/register")}>Register here</Button>
-        </div>
-      </CardFooter>
+      </div>
     </AuthLayout>
   );
 };

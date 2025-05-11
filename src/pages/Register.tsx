@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -102,7 +101,7 @@ const Register = () => {
       subtitle="Sign up to start learning today"
       imageSrc="/placeholder.svg"
     >
-      <CardContent>
+      <div className="space-y-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
@@ -110,18 +109,18 @@ const Register = () => {
               name="fullname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel className="text-white">Full Name</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input 
                         placeholder="Enter your full name" 
-                        className="pl-10" 
+                        className="pl-10 bg-white/20 border-white/30 text-white placeholder:text-white/60" 
                         {...field} 
                       />
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-white" />
                 </FormItem>
               )}
             />
@@ -131,18 +130,18 @@ const Register = () => {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel className="text-white">Username</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input 
                         placeholder="Choose a username" 
-                        className="pl-10" 
+                        className="pl-10 bg-white/20 border-white/30 text-white placeholder:text-white/60" 
                         {...field} 
                       />
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-white" />
                 </FormItem>
               )}
             />
@@ -152,19 +151,19 @@ const Register = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-white">Email</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input 
                         type="email" 
                         placeholder="Enter your email" 
-                        className="pl-10" 
+                        className="pl-10 bg-white/20 border-white/30 text-white placeholder:text-white/60" 
                         {...field} 
                       />
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-white" />
                 </FormItem>
               )}
             />
@@ -174,18 +173,18 @@ const Register = () => {
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel className="text-white">Phone Number</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Phone className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input 
                         placeholder="Enter your phone number" 
-                        className="pl-10" 
+                        className="pl-10 bg-white/20 border-white/30 text-white placeholder:text-white/60" 
                         {...field} 
                       />
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-white" />
                 </FormItem>
               )}
             />
@@ -195,27 +194,27 @@ const Register = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-white">Password</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input 
                         type={showPassword ? "text" : "password"} 
                         placeholder="Create a password" 
-                        className="pl-10 pr-10"
+                        className="pl-10 pr-10 bg-white/20 border-white/30 text-white placeholder:text-white/60"
                         {...field} 
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute right-0 top-0 h-10 w-10"
+                        className="absolute right-0 top-0 h-10 w-10 text-white/70 hover:text-white"
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? (
-                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                          <EyeOff className="h-4 w-4" />
                         ) : (
-                          <Eye className="h-4 w-4 text-muted-foreground" />
+                          <Eye className="h-4 w-4" />
                         )}
                         <span className="sr-only">
                           {showPassword ? "Hide password" : "Show password"}
@@ -223,7 +222,7 @@ const Register = () => {
                       </Button>
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-white" />
                 </FormItem>
               )}
             />
@@ -233,27 +232,27 @@ const Register = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel className="text-white">Confirm Password</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input 
                         type={showConfirmPassword ? "text" : "password"} 
                         placeholder="Confirm your password" 
-                        className="pl-10 pr-10"
+                        className="pl-10 pr-10 bg-white/20 border-white/30 text-white placeholder:text-white/60"
                         {...field} 
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute right-0 top-0 h-10 w-10"
+                        className="absolute right-0 top-0 h-10 w-10 text-white/70 hover:text-white"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       >
                         {showConfirmPassword ? (
-                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                          <EyeOff className="h-4 w-4" />
                         ) : (
-                          <Eye className="h-4 w-4 text-muted-foreground" />
+                          <Eye className="h-4 w-4" />
                         )}
                         <span className="sr-only">
                           {showConfirmPassword ? "Hide password" : "Show password"}
@@ -261,14 +260,14 @@ const Register = () => {
                       </Button>
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-white" />
                 </FormItem>
               )}
             />
             
             <Button 
               type="submit" 
-              className="w-full" 
+              className="w-full bg-white text-primary hover:bg-white/90" 
               disabled={isLoading}
             >
               {isLoading ? "Signing up..." : "Sign up"}
@@ -276,9 +275,9 @@ const Register = () => {
           </form>
         </Form>
         
-        <div className="relative my-6">
-          <Separator />
-          <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-sm text-gray-500">
+        <div className="relative">
+          <Separator className="bg-white/30" />
+          <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary/70 backdrop-blur-sm px-2 text-sm text-white">
             OR
           </p>
         </div>
@@ -286,7 +285,7 @@ const Register = () => {
         <Button
           type="button"
           variant="outline"
-          className="w-full flex items-center justify-center gap-2"
+          className="w-full flex items-center justify-center gap-2 bg-white text-primary border-white hover:bg-white/90"
           onClick={handleGoogleSignup}
           disabled={isLoading}
         >
@@ -317,14 +316,12 @@ const Register = () => {
           </svg>
           Sign up with Google
         </Button>
-      </CardContent>
-      
-      <CardFooter className="flex flex-col space-y-2 border-t bg-slate-50 p-6 rounded-b-lg">
-        <div className="text-sm text-center text-muted-foreground">
+
+        <div className="text-sm text-center text-white/80 mt-4">
           <p>Already have an account?</p>
-          <Button variant="link" onClick={() => navigate("/login")}>Login here</Button>
+          <Button variant="link" className="text-white" onClick={() => navigate("/login")}>Login here</Button>
         </div>
-      </CardFooter>
+      </div>
     </AuthLayout>
   );
 };
